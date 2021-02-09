@@ -1,0 +1,475 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,200;1,300;1,400;1,500;1,600&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;1,100;1,300;1,400;1,500&display=swap');
+
+:root {
+  --sidebar-background-color: #23293c;
+  --sidebar-text-color: #fff;
+
+  --accent-color: #f58a8a;
+  --tags-color: rgb(136, 214, 210);
+  /* ROSA: (255, 188, 183) GUL:(255, 224, 123) BLÅ: (106, 189, 238) */
+
+  --main-background-color: #fff;
+  --main-text-color: #000;
+}
+
+/* ----------------- RESET ---------------- */
+*,
+::after,
+::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+*:not(i) {
+  font-family: 'Poppins', sans-serif;
+}
+
+input:focus {
+  outline: none;
+}
+
+.editor > * {
+  margin: 1em;
+  /* margin: 0 !important;
+  padding: 0 !important; */
+}
+
+h1,
+h2,
+p,
+input,
+span {
+  color: var(--main-text-color);
+}
+
+.CodeMirror-lines {
+  color: var(--main-text-color) !important;
+}
+
+/*----------------- UTILITIES --------------- */
+
+.ttpo {
+  visibility: hidden;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .ttpo,
+  .ttpo * {
+    visibility: visible;
+  }
+  .ttpo {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+/* .main {
+  width: 90%;
+  margin: 0 auto;
+} */
+
+.container {
+  display: flex;
+  flex-direction: row;
+  position: sticky;
+  background-color: var(--main-background-color);
+}
+
+/*------------------- SIDEBARS ----------------*/
+
+.sidebar {
+  background-color: var(--sidebar-background-color);
+  transition: 0.5s;
+  width: 0;
+
+  max-width: 175px;
+
+  height: 100vh;
+
+  overflow-x: hidden;
+
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-close-button {
+  right: 0;
+  top: 0;
+}
+
+.right-sidebar {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  margin: 0;
+}
+.settings-menu {
+  margin: 8px;
+  color: white;
+}
+
+.settings-menu li {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+/*-----------------SIDEBAR TAGS -----------------*/
+
+.tag-menu {
+  margin: 1em;
+}
+
+.tag {
+  color: white;
+  margin: 3px;
+  padding: 2px 30px;
+  border-radius: 25px;
+  display: inline-block;
+  border: 0.14em solid var(--tags-color);
+}
+
+.active-tag {
+  background: var(--tags-color);
+}
+
+/*--------------- NOTE LIST -------------*/
+
+.main {
+  overflow-y: auto;
+  height: 100vh;
+  /* -------------------- ÄNDRAD PÅ TEST ------------------------- */
+  width: 100vw;
+  margin: 0 auto;
+  background-color: var(--main-background-color);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: var(--main-background-color);
+
+  position: fixed;
+  width: 100%;
+  /* min height bestämmer hela elementets höjd
+   och padding i nuläget och verkar göra margin-bottom irrelevant */
+  min-height: 40px;
+  z-index: 0;
+  padding: 0px 10px;
+}
+
+header > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* border: 3px solid red; */
+}
+
+header > .hamburger {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.header h1 {
+  /* border: 3px solid orange; */
+  font-weight: 200;
+}
+
+.note-list {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.note-container {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  /* margin måste vara här för att inte crasha */
+  margin: 1em;
+}
+
+.note-content {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.side-content {
+  min-width: 8vw;
+  padding: 0 0px;
+}
+
+@media (max-width: 500px) {
+  .side-content {
+    min-width: 13vw;
+  }
+}
+@media (min-width: 1500px) {
+  .side-content {
+    min-width: 4vw;
+  }
+}
+
+.new-doc {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--accent-color);
+  border: none;
+  border-radius: 100%;
+
+  margin-left: auto;
+}
+
+/* ------------------- EDITOR ----------------- */
+
+.icons-menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.editor {
+  background: var(--main-background-color);
+
+  width: 0;
+  max-width: 100%;
+  height: 100%;
+
+  position: fixed;
+  /* right: 0; */
+
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+}
+.editor > * {
+  /* .editor:not(.editor-toolbar) { */
+  margin-left: 1.5em;
+}
+.tags-bar {
+  display: flex;
+  align-items: center;
+}
+
+.tags-bar > * {
+  height: 2em;
+  margin: 0.2em;
+}
+
+.tags-bar ul {
+  display: flex;
+}
+
+.tags-list li {
+  display: flex;
+  align-items: center;
+  background: var(--tags-color);
+  margin: 0.2em;
+  padding: 0.3em 1.5em;
+  border-radius: 25px;
+  color: white;
+  font-size: 0.9em;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* todo: fix it, maybe? */
+.tags-list li p {
+  color: black;
+}
+
+.tag-input-field {
+  background-color: var(--main-background-color);
+  border-radius: 15px;
+  padding: 0.5em;
+  border: 0.15em solid var(--accent-color);
+  outline: none;
+}
+
+.add-tag-button {
+  border-radius: 50%;
+  border: none;
+  background-color: var(--accent-color);
+  padding: 0.3em 0.7em;
+}
+
+.title-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.title-input-field {
+  background-color: var(--main-background-color);
+  border: none;
+  width: 100%;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-left: 0.2em;
+}
+
+/* .left-grey-text {
+  opacity: 0.5;
+  font-size: 0.7em;
+  margin: 1em;
+} */
+
+.print,
+.delete-doc {
+  height: 50px;
+  width: 50px;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+}
+.search-input {
+  visibility: hidden;
+  border: none;
+  background-color: var(--main-background-color);
+}
+
+@media (max-width: 450px) {
+  .search-input {
+    max-width: 60px;
+  }
+  .search-button {
+    position: fixed;
+    right: 10px;
+  }
+  .note-title {
+    font-size: 1rem;
+  }
+
+  p.note-content {
+    font-size: 0.875rem;
+  }
+
+  .since-edited {
+    font-size: 0.875rem;
+  }
+}
+
+.active {
+  visibility: visible;
+  border-bottom: 0.13em solid var(--main-text-color);
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+.CodeMirror {
+  background-color: var(--main-background-color) !important;
+  height: 50vh !important;
+  padding: 0 !important;
+}
+
+.CodeMirror img {
+  max-width: 50vw;
+}
+.star-icon {
+  max-width: 24px;
+  stroke: var(--accent-color) !important;
+  stroke-width: 0.1em;
+}
+
+.feather-file-plus {
+  stroke: black !important;
+}
+
+.feather-shield,
+.feather-settings,
+li .feather-info {
+  stroke: white !important;
+}
+
+.note-stats > *,
+.note-stats > p * {
+  color: white;
+}
+
+.editor-statusbar {
+  visibility: hidden !important;
+}
+
+.editor-toolbar {
+  display: flex;
+  flex: 1;
+  max-width: 100% !important;
+  position: absolute !important;
+  margin: 0px !important;
+  bottom: 5% !important;
+  flex-wrap: wrap;
+  border: none !important;
+  z-index: 100 !important;
+}
+
+.editor-toolbar a {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-wrap: wrap !important;
+  margin: 0.2em 1em !important;
+}
+
+.editor-preview {
+  background-color: var(--main-background-color) !important;
+}
+
+.editor-toolbar a::before {
+  color: gray;
+}
+
+a.fa.fa-trash::before {
+  color: red !important;
+}
+
+.dark-mode {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 25px;
+  width: 70px;
+  background-color: #3f4242;
+  margin: 1em;
+}
+
+.dark-mode span {
+  display: grid;
+  align-items: center;
+  padding: 2px;
+  position: relative;
+  transition: 0.4s;
+}
+
+.koala {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.moon,
+.sun {
+  grid-column-start: 1;
+  grid-row-start: 1;
+  transition: 0.4s;
+}
